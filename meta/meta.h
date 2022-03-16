@@ -15,11 +15,18 @@ template <typename T> struct my_remove_cv<const T> {typedef T type;};
 template <typename T> struct my_remove_cv<volatile T> {typedef T type;};
 template <typename T> struct my_remove_cv<const volatile T> {typedef T type;};
 
+template <typename T>
+using my_remove_cv_t = typename my_remove_cv<T>::type;
+
 template <typename T> struct my_remove_const {typedef T type;};
 template <typename T> struct my_remove_const<const T> {typedef T type;};
+template <typename T>
+using my_remove_const_t = typename my_remove_const<T>::type;
 
 template <typename T> struct my_remove_volatile {typedef T type;};
 template <typename T> struct my_remove_volatile<volatile T> {typedef T type;};
+template <typename T>
+using my_remove_volatile_t = typename my_remove_volatile<T>::type;
 
 //my is_same
 template<typename T, typename U>
@@ -63,3 +70,27 @@ struct my_is_integral : std::integral_constant<
 >{};
 template <typename T>
 inline constexpr bool my_is_integral_v = my_is_integral<T>::value;
+
+//my is_null_pointer
+template <typename T>
+struct my_is_null_pointer : my_is_same<std::nullptr_t, typename my_remove_cv<T>::type>{};
+
+//my is_array
+template <typename T>
+struct my_is_array : std::false_type {};
+
+template <typename T>
+struct my_is_array<T[]> : std::true_type {};
+
+template <typename T, std::size_t N>
+struct my_is_array<T[N]> : std::true_type {};
+
+template <typename T>
+inline constexpr bool my_is_array_t = my_is_array<T>::value;
+
+template<typename T>
+typename std::enable_if<my_is_integral_v<T>, int>::type
+up(T t){
+    t += 1;
+    return t;
+}
