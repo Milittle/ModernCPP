@@ -5,8 +5,6 @@
 #ifndef MODERNTEST_CALL_ONCE_H
 #define MODERNTEST_CALL_ONCE_H
 
-#endif //MODERNTEST_CALL_ONCE_H
-
 #include <thread>
 #include <mutex>
 #include <iostream>
@@ -59,3 +57,5 @@ void test_call_once()
     t3.join();
     t4.join();
 }
+
+#endif //MODERNTEST_CALL_ONCE_H

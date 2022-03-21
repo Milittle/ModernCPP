@@ -5,8 +5,6 @@
 #ifndef MODERNTEST_META_H
 #define MODERNTEST_META_H
 
-#endif //MODERNTEST_META_H
-
 #include <type_traits>
 
 //remove series
@@ -94,3 +92,5 @@ up(T t){
     t += 1;
     return t;
 }
+
+#endif //MODERNTEST_META_H
