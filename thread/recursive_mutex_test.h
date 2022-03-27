@@ -2,20 +2,19 @@
 // Created by milittle on 2022/3/21.
 //
 
-#ifndef MODERNTEST_RECURSIVE_MUTEX_H
-#define MODERNTEST_RECURSIVE_MUTEX_H
+#ifndef MODERNTEST_RECURSIVE_MUTEX_TEST_H
+#define MODERNTEST_RECURSIVE_MUTEX_TEST_H
 
 #include <iostream>
 #include <thread>
 #include <mutex>
 
-class X {
+class RecursiveMutexTest {
     std::recursive_mutex m;
-    std::recursive_timed_mutex mm;
     std::string shared;
 public:
     void fun1() {
-        std::scoped_lock<std::recursive_mutex, std::recursive_timed_mutex> lk(m, mm);
+        std::scoped_lock<std::recursive_mutex> lk(m);
         shared = "fun1";
         std::cout << "in fun1, shared variable is now " << shared << '\n';
     }
@@ -28,12 +27,21 @@ public:
     };
 };
 
-class XT {
+int recursive_mutex_test()
+{
+    RecursiveMutexTest x;
+    std::thread t1(&RecursiveMutexTest::fun1, &x);
+    std::thread t2(&RecursiveMutexTest::fun2, &x);
+    t1.join();
+    t2.join();
+}
+
+class RecursiveTimedMutexTest {
     std::recursive_timed_mutex m;
     std::string shared;
 public:
     void fun1() {
-        std::lock_guard<std::recursive_timed_mutex> lk(m);
+        std::unique_lock<std::recursive_timed_mutex> lk(m, std::try_to_lock);
         shared = "fun1";
         std::cout << "in fun1, shared variable is now " << shared << '\n';
     }
@@ -46,13 +54,13 @@ public:
     };
 };
 
-int recursive_lock_test()
+int recursive_timed_mutex_test()
 {
-    X x;
-    std::thread t1(&X::fun1, &x);
-    std::thread t2(&X::fun2, &x);
+    RecursiveTimedMutexTest x;
+    std::thread t1(&RecursiveTimedMutexTest::fun1, &x);
+    std::thread t2(&RecursiveTimedMutexTest::fun2, &x);
     t1.join();
     t2.join();
 }
 
-#endif //MODERNTEST_RECURSIVE_MUTEX_H
+#endif //MODERNTEST_RECURSIVE_MUTEX_TEST_H
