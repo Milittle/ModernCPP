@@ -27,7 +27,7 @@ public:
     };
 };
 
-int recursive_mutex_test()
+void recursive_mutex_test()
 {
     RecursiveMutexTest x;
     std::thread t1(&RecursiveMutexTest::fun1, &x);
@@ -54,7 +54,7 @@ public:
     };
 };
 
-int recursive_timed_mutex_test()
+void recursive_timed_mutex_test()
 {
     RecursiveTimedMutexTest x;
     std::thread t1(&RecursiveTimedMutexTest::fun1, &x);

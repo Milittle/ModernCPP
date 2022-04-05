@@ -37,7 +37,7 @@ private:
     unsigned int value_ = 0;
 };
 
-int shared_mutex_test() {
+void shared_mutex_test() {
     ThreadSafeCounter counter;
 
     auto increment_and_print = [&counter]() {

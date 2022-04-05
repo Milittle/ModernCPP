@@ -31,7 +31,7 @@ void transfer(Box &from, Box &to, int num)
     // 'from.m' 与 'to.m' 互斥解锁于 'unique_lock' 析构函数
 }
 
-int unique_lock()
+void unique_lock()
 {
     Box acc1(100);
     Box acc2(50);
