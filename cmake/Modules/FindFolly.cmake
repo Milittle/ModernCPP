@@ -12,19 +12,25 @@
 #  Folly_FOUND            System has folly, include and lib dirs found
 #  Folly_INCLUDE_DIR      The folly includes directories.
 #  Folly_LIBRARY          The folly library.
+#
+#find_path(Folly_INCLUDE_DIR NAMES folly)
+#find_library(Folly_LIBRARY NAMES libfolly.dylib libfollybenchmark.dylib)
+#
+#if(Folly_INCLUDE_DIR AND Folly_LIBRARY)
+#    set(Folly_FOUND TRUE)
+#    mark_as_advanced(
+#            Folly_INCLUDE_DIR
+#            Folly_LIBRARY
+#    )
+#endif()
 
-find_path(Folly_INCLUDE_DIR NAMES folly)
-find_library(Folly_LIBRARY NAMES libfolly.dylib libfollybenchmark.dylib)
+find_path(Folly_INCLUDE_DIR folly/Try.h
+        PATHS "")
+include_directories(${Folly_INCLUDE_DIR})
+find_library(Folly_LIBRARY folly)
+message(STATUS "finding ${Folly_LIBRARY}")
 
-if(Folly_INCLUDE_DIR AND Folly_LIBRARY)
-    set(Folly_FOUND TRUE)
-    mark_as_advanced(
-            Folly_INCLUDE_DIR
-            Folly_LIBRARY
-    )
-endif()
-
-if(NOT Folly_FOUND)
-    message(FATAL_ERROR "Folly doesn't exist")
-endif()
+#if(NOT Folly_FOUND)
+#    message(FATAL_ERROR "Folly doesn't exist")
+#endif()
 

@@ -6,7 +6,9 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
 
 include(FindFolly)
 include(FindGlog)
+include(FindRocksdb)
 
-include_directories(${Folly_INCLUDE_DIR})
+add_subdirectory(rocksdbexamples)
+
 add_executable(moderntest main.cpp)
 target_link_libraries(moderntest ${Folly_LIBRARY} ${Glog_LIBRARY})
