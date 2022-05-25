@@ -9,6 +9,7 @@ include(FindGlog)
 include(FindRocksdb)
 
 add_subdirectory(rocksdbexamples)
+add_subdirectory(stdtest)
 
 add_executable(moderntest main.cpp)
 target_link_libraries(moderntest ${Folly_LIBRARY} ${Glog_LIBRARY})

@@ -1,0 +1,2 @@
+add_executable(vector_test vector_test.cpp)
+add_executable(variadic_template_test variadic_template_test.cpp)
